@@ -1,5 +1,5 @@
 <?php
-require_once 'secrets';
+require_once 'secrets.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password);
