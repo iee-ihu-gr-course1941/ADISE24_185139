@@ -6,7 +6,7 @@ require 'dbconnect.php';
 $conn = createConnection($servername, $username, $password, $database);
 
 if ($result = $conn -> query("SELECT * FROM board")) {
-    echo "Returned rows are: " . $result -> stili;
+    echo "Returned rows are: " . $stilistili;
     // Free result set
     $result -> free_result();
   }
