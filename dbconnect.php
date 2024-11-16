@@ -11,7 +11,7 @@ function createConnection() {
         header("HTTP/1.1 503 Service Unavailable");
         header('Content-Type: application/json;');
         echo '{"Response":"Could not connect to database", "StatusCode":503}';
-        die("Connection failed: " . $conn->connect_error);
+        die("Connection failed: " . $conn-> connect_error);
     }
 
     return $conn;
@@ -22,6 +22,3 @@ function closeConnection($conn) {
     $conn->close();
 }
 ?> 
-/*  intex.php select * from board
-
-na kaleso thn methodo*/
