@@ -4,7 +4,7 @@ require_once 'secrets.php';
 // Creates and returns a connection to MySQL
 function createConnection() {
     // Create connection new mysqli
-    $conn = mysqli_connect($servername, $username, $password, $datadase);
+    $conn = new mysqli("servername", "username", "password", "database");
     
     // Check connection and send error response if fail 
     if ($conn->connect_error) {
