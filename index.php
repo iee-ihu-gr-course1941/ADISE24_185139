@@ -3,7 +3,7 @@
 require_once 'secrets.php';
 require 'dbconnect.php';
 
-$conn = createConnection();
+$conn = createConnection($servername, $username, $password, $database);
 
 if ($result = $conn -> query("SELECT * FROM board")) {
     echo "Returned rows are: " . $result -> stili;

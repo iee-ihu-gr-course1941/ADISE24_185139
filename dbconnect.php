@@ -2,7 +2,7 @@
 require_once 'index.php';
 
 // Creates and returns a connection to MySQL
-function createConnection() {
+function createConnection($servername, $username, $password, $database) {
     // Create connection
     $conn = new mysqli($servername, $username, $password, $database);
     
