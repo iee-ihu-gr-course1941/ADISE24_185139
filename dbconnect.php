@@ -4,7 +4,7 @@ require_once 'secrets.php';
 // Creates and returns a connection to MySQL
 function createConnection() {
     // Create connection
-    $conn = new mysqli($servername, $username, $password, $database);
+    $conn = new mysqli($servername, $username, $password, $datadase);
     
     // Check connection and send error response if fail 
     if ($conn->connect_error) {
@@ -13,8 +13,9 @@ function createConnection() {
         echo '{"Response":"Could not connect to database", "StatusCode":503}';
         die("Connection failed: " . $conn-> connect_error);
     }
-
+    echo "Connected successfully";
     return $conn;
+    
 }
 
 // Closes connection to MySQL
