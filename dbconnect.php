@@ -1,5 +1,5 @@
 <?php
-require_once 'secrets.php';
+require_once 'index.php';
 
 // Creates and returns a connection to MySQL
 function createConnection() {

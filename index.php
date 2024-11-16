@@ -1,5 +1,6 @@
 <?php
 
+require_once 'secrets.php';
 require 'dbconnect.php';
 
 $conn = createConnection();
