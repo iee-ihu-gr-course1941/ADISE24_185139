@@ -6,7 +6,7 @@ require 'dbconnect.php';
 $conn = createConnection($servername, $username, $password, $database);
 
 if ($result = $conn -> query("SELECT * FROM board")) {
-    echo "Returned rows are: " . $stili;
+    echo  $result->fetch_assoc();
     // Free result set
     $result -> free_result();
   }
