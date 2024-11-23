@@ -3,9 +3,62 @@
 require_once 'secrets.php';
 require 'dbconnect.php';
 
+$request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
+
 $conn = createConnection($servername, $username, $password, $database);
 
-if ($result = $conn -> query("SELECT * FROM board")) {
+switch ($request[0]) {
+  case "board":
+    get_board($conn);
+    break;
+
+  default:
+    header("HTTP/1.1 404 Endpoint not found");
+    header('Content-Type: application/json;');
+    echo '{"Response":"Endpoint not found", "StatusCode":404}';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function get_board($conn) {
+  if ($result = $conn -> query("SELECT * FROM board")) {
     if ($result->num_rows > 0) {
       // output data of each row
       $json = '{'; 
@@ -17,6 +70,7 @@ if ($result = $conn -> query("SELECT * FROM board")) {
       header("HTTP/1.1 200 Ok");
       header('Content-Type: application/json;');
       echo $json;
+    }
   }
 }
   
