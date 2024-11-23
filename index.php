@@ -14,13 +14,14 @@ if ($result = $conn -> query("SELECT * FROM board")) {
       }
       $json = substr_replace($json, '', -1);
       $json = $json . '}';
+      header("HTTP/1.1 200 Ok");
+      header('Content-Type: application/json;');
+      echo $json;
   }
 }
   
 
-// header("HTTP/1.1 500 Internal Server Error");
-// header('Content-Type: application/json;');
-// echo '{"Response":"Internal Server Error", "StatusCode":500}';
+
 
 ?>
 
