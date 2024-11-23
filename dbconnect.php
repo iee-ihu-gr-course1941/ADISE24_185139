@@ -13,7 +13,6 @@ function createConnection($servername, $username, $password, $database) {
         echo '{"Response":"Could not connect to database", "StatusCode":503}';
         die("Connection failed: " . $conn-> connect_error);
     }
-    echo "Connected successfully";
     return $conn;
     
 }
