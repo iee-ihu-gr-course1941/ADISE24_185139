@@ -8,9 +8,22 @@ $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 
 $conn = createConnection($servername, $username, $password, $database);
 
+$currentPlayer = $_SERVER['Authorization'];
+
 switch ($request[0]) {
   case "board":
     get_board($conn);
+    break;
+  
+  case "move":
+    if ($currentPlayer != "Player1" || $currentPlayer != "Player2") {
+      header("HTTP/1.1 403 Unauuthorized");
+      header('Content-Type: application/json;');
+      echo '{"Response":"Unauthorized", "StatusCode":403}';
+      die("Unauthorized");
+    }
+
+    get_move($conn, $request[1], $request[2], $currentPlayer);
     break;
 
   default:
