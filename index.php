@@ -16,11 +16,11 @@ switch ($request[0]) {
     break;
   
   case "move":
-    if ($currentPlayer != "Player1" || $currentPlayer != "Player2") {
-      header("HTTP/1.1 403 Unauuthorized");
+    if ($currentPlayer != "Player1" && $currentPlayer != "Player2") {
+      header("HTTP/1.1 403 Unauthorized");
       header('Content-Type: application/json;');
       echo '{"Response":"Unauthorized", "StatusCode":403}';
-      die("Unauthorized");
+      die();
     }
 
     get_move($conn, $request[1], $request[2], $currentPlayer);

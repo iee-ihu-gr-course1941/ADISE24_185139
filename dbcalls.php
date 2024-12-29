@@ -56,7 +56,7 @@ function validate_move($conn, $original_position, $target_position, $currentPlay
           header("HTTP/1.1 400 Bad Request");
           header('Content-Type: application/json;');
           echo '{"Response":"Original cell is not yours", "StatusCode":400}';
-          die('Wrong original cell');
+          die();
         } 
       }
     }
@@ -145,7 +145,7 @@ function validate_move($conn, $original_position, $target_position, $currentPlay
     header("HTTP/1.1 400 Bad Request");
     header('Content-Type: application/json;');
     echo '{"Response":"Target cell is not in range", "StatusCode":400}';
-    die('Cell not in range');
+    die();
   }
 
   // Checks if target cell is empty otherwise fails
@@ -156,7 +156,7 @@ function validate_move($conn, $original_position, $target_position, $currentPlay
           header("HTTP/1.1 400 Bad Request");
           header('Content-Type: application/json;');
           echo '{"Response":"Target cell is not empty", "StatusCode":400}';
-          die('Cell not empty');
+          die();
         } 
       }
     }

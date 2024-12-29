@@ -11,7 +11,7 @@ function createConnection($servername, $username, $password, $database) {
         header("HTTP/1.1 503 Service Unavailable");
         header('Content-Type: application/json;');
         echo '{"Response":"Could not connect to database", "StatusCode":503}';
-        die("Connection failed: " . $conn-> connect_error);
+        die();
     }
     return $conn;
     
