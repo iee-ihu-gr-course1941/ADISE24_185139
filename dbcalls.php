@@ -23,13 +23,13 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
   validate_move($conn, $original_position, $target_position, $currentPlayer);
 
   // Breaks original position into letter and number combination
-  $original_position_letter = substr($original_position, 1, 1);
-  $original_position_number = substr($original_position, 2, 1);
+  $original_position_letter = substr($original_position, 0, 1);
+  $original_position_number = substr($original_position, 1, 1);
 
   $color = get_user_color($conn);
 
   // Updates board
-  $sql = "UPDATE board SET  $original_position_letter =  $color   WHERE stili= $original_position_number";
+  $sql = "UPDATE board SET  $original_position_letter='$color' WHERE stili='$original_position_number';";
 
   if ($conn->query($sql) === TRUE) {
     
@@ -41,8 +41,8 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
 
 function validate_move($conn, $original_position, $target_position, $currentPlayer) {
   // Breaks original position into letter and number combination
-  $original_position_letter = substr($original_position, 1, 1);
-  $original_position_number = substr($original_position, 2, 1);
+  $original_position_letter = substr($original_position, 0, 1);
+  $original_position_number = substr($original_position, 1, 1);
 
   // Gets current user's color
   $color = get_user_color($currentPlayer);
@@ -138,8 +138,8 @@ function validate_move($conn, $original_position, $target_position, $currentPlay
   }
 
   // Breaks target position into letter and number combination 
-  $target_position_letter = substr($target_position, 1, 1);
-  $target_position_number = substr($target_position, 2, 1);
+  $target_position_letter = substr($target_position, 0, 1);
+  $target_position_number = substr($target_position, 1, 1);
 
   // Checks if target position is in range of original position otherwise fails (true-false flag)
   if (!in_array($target_position_letter, $available_letters) || !in_array($target_position_number, $available_numbers)) {
