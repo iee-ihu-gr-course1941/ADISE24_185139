@@ -30,14 +30,23 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
 
   // TODO LOGIC
 
+  // 1. Check if move or duplicate 
+  // if move then set original position 'E'
+
+  // 2. Check target cell neighbors
+  // if not 'E' set them to player color
+
   // Updates board
-  $sql = "UPDATE board SET $original_position_letter='$color' WHERE stili='$original_position_number';";
+  $sql = "UPDATE board SET $target_position_letter='$color' WHERE stili='$target_position_number';";
 
   if ($conn->query($sql) === TRUE) {
     
-  } 
+  }
 
-  // END TODO LOGIC
+  // TODO LOGIC
+
+  // 1. Change player turn
+  // 2. Check deadlock / player won
 
   // Returns new board
   get_board($conn);
