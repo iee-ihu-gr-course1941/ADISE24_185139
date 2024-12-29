@@ -10,6 +10,11 @@ $conn = createConnection($servername, $username, $password, $database);
 
 $currentPlayer = getBearerToken();
 
+// TODO
+
+// 1. Make "reset" endpoint that resets whole game
+// 2. Make "status" enpoint that shows game status (Player1 move, Player2 move, Player1 won, Player2 won)
+
 switch ($request[0]) {
   case "board":
     get_board($conn);
