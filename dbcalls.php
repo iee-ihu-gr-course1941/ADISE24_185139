@@ -26,14 +26,18 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
   $original_position_letter = substr($original_position, 0, 1);
   $original_position_number = substr($original_position, 1, 1);
 
-  $color = get_user_color($conn);
+  $color = get_user_color($currentPlayer);
+
+  // TODO LOGIC
 
   // Updates board
-  $sql = "UPDATE board SET  $original_position_letter='$color' WHERE stili='$original_position_number';";
+  $sql = "UPDATE board SET $original_position_letter='$color' WHERE stili='$original_position_number';";
 
   if ($conn->query($sql) === TRUE) {
     
   } 
+
+  // END TODO LOGIC
 
   // Returns new board
   get_board($conn);
@@ -60,8 +64,6 @@ function validate_move($conn, $original_position, $target_position, $currentPlay
       }
     }
   }
-
-  echo "here2";
 
   // Gets available columns for original position
   switch ($original_position_letter) {
