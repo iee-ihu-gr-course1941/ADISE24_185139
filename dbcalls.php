@@ -47,12 +47,11 @@ function validate_move($conn, $original_position, $target_position, $currentPlay
   // Gets current user's color
   $color = get_user_color($currentPlayer);
 
-
   // Checks if original cell is playing user's color otherwise fails
-  if ($result = $conn -> query("SELECT * FROM board WHERE stili= $target_position_number")) {
+  if ($result = $conn -> query("SELECT * FROM board WHERE stili= '$original_position_number';")) {
     if ($result->num_rows > 0) {
       while($row = $result->fetch_assoc()) {
-        if ($row[$target_position_letter] != $color) {
+        if ($row[$original_position_letter] != $color) {
           header("HTTP/1.1 400 Bad Request");
           header('Content-Type: application/json;');
           echo '{"Response":"Original cell is not yours", "StatusCode":400}';
@@ -61,6 +60,8 @@ function validate_move($conn, $original_position, $target_position, $currentPlay
       }
     }
   }
+
+  echo "here2";
 
   // Gets available columns for original position
   switch ($original_position_letter) {
@@ -149,7 +150,7 @@ function validate_move($conn, $original_position, $target_position, $currentPlay
   }
 
   // Checks if target cell is empty otherwise fails
-  if ($result = $conn -> query("SELECT * FROM board WHERE stili= $target_position_number")) {
+  if ($result = $conn -> query("SELECT * FROM board WHERE stili= '$target_position_number';")) {
     if ($result->num_rows > 0) {
       while($row = $result->fetch_assoc()) {
         if ($row[$target_position_letter] != 'E') {
