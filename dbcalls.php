@@ -30,18 +30,132 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
 
   // TODO LOGIC
 
-  // 1. Check if move or duplicate 
-  // if move then set original position 'E'
+  $position_number_flag = false ;
+  
+  if ($target_position_number = $original_position_number || $target_position_number = $original_position_letter + 1 || $target_position_number = $original_position_letter - 1 ){
+    $position_letter_flag = true;
+  }
+
+  $position_letter_flag = false;
+  switch ($original_position_letter) {
+    case "a":
+      if ($target_position_letter = 'a' || $target_position_letter = 'b'){
+        $position_letter_flag = true;
+      }
+      break;
+    
+    case "b":
+      if ($target_position_letter = 'a' || $target_position_letter = 'b'  || $target_position_letter = 'c'){
+        $position_letter_flag = true;
+      }
+      break;
+
+    case "c":
+      if ($target_position_letter = 'b' || $target_position_letter = 'c'  || $target_position_letter = 'd'){
+        $position_letter_flag = true;
+      }
+      break;  
+   
+    case "d":
+      if ($target_position_letter = 'c' || $target_position_letter = 'd'  || $target_position_letter = 'e'){
+        $position_letter_flag = true;
+      }
+      break;
+        
+    case "e":
+      if ($target_position_letter = 'd' || $target_position_letter = 'e'  || $target_position_letter = 'f'){
+        $position_letter_flag = true;
+      }
+      break; 
+      
+    case "f":
+      if ($target_position_letter = 'e' || $target_position_letter = 'f'  || $target_position_letter = 'g'){
+        $position_letter_flag = true;
+      }
+      break; 
+
+    case "g":
+      if ($target_position_letter = 'f' || $target_position_letter = 'g'){
+        $position_letter_flag = true;
+      }
+    break;   
+
+    default: //404  letter not found
+      header("HTTP/1.1 404 Letter not found");
+      header('Content-Type: application/json;');
+      echo '{"Response":"Letter not found", "StatusCode":404}';
+      die();
+  }
+
+  if ($position_letter_flag != true || $position_number_flag != true) {
+    $sql = "UPDATE board SET $original_position_letter='E' WHERE stili='$original_position_number';";
+
+    if ($conn->query($sql) === TRUE) {
+      
+    }
+  }
+
 
   // 2. Check target cell neighbors
   // if not 'E' set them to player color
+  switch ($target_position_letter) {
+    case "a":
+      $available_letters = ['a', 'b'];
+      break;
+    
+    case "b":
+      $available_letters = ['a', 'b', 'c'];
+      break;
+
+    case "c":
+      $available_letters = ['b', 'c', 'd'];
+      break;  
+   
+    case "d":
+      $available_letters = ['c', 'd', 'e'];
+      break;
+        
+    case "e":
+      $available_letters = ['d', 'e', 'f'];
+      break; 
+      
+    case "f":
+      $available_letters = ['e', 'f', 'g'];
+      break; 
+
+    case "g":
+      $available_letters = ['f', 'g'];
+    break;   
+
+    default: //406 Unacceptable movement
+      header("HTTP/1.1 406 Unacceptable movement");
+      header('Content-Type: application/json;');
+      echo '{"Response":"Unacceptable movement", "StatusCode":406}';
+      die();
+  }
+
+  $available_numbers = [$target_position_number - 1, $target_position_number, $target_position_number + 1];
+
+  for ($x = 0; $x > count($available_numbers); $x++) {
+    $number = $available_numbers[$x];
+    for ($y = 0; $y > count($available_letters); $y++) {
+      $letter = $available_letters[$y];
+      $sql += "UPDATE board SET $letter='$color' WHERE stili='$number' AND $letter<>'E' AND $letter<>'$color';";
+    }
+  }
 
   // Updates board
-  $sql = "UPDATE board SET $target_position_letter='$color' WHERE stili='$target_position_number';";
-
-  if ($conn->query($sql) === TRUE) {
-    
-  }
+  $mysqli->multi_query($query);
+  do {
+      /* store the result set in PHP */
+      if ($result = $mysqli->store_result()) {
+          while ($row = $result->fetch_row()) {
+          }
+      }
+      /* print divider */
+      if ($mysqli->more_results()) {
+      }
+  } while ($mysqli->next_result());
 
   // TODO LOGIC
 
