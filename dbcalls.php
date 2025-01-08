@@ -315,21 +315,21 @@ function get_status($conn) {
 
 function reset_game($conn) {
   // Reset board / status
-  $sql = "DELETE * FROM board;"
-  $sql += "DELETE * FROM status;"
+  $sql = "DELETE * FROM board;";
+  $sql += "DELETE * FROM status;";
 
-  $sql += "INSERT INTO status(Player_turn, Game_result) VALUES('B', NULL);"
+  $sql += "INSERT INTO status(Player_turn, Game_result) VALUES('B', NULL);";
 
-  $sql += "INSERT INTO board(stili) VALUES(1);"
-  $sql += "INSERT INTO board(stili) VALUES(2);"
-  $sql += "INSERT INTO board(stili) VALUES(3);"
-  $sql += "INSERT INTO board(stili) VALUES(4);"
-  $sql += "INSERT INTO board(stili) VALUES(5);"
-  $sql += "INSERT INTO board(stili) VALUES(6);"
-  $sql += "INSERT INTO board(stili) VALUES(7);"
+  $sql += "INSERT INTO board(stili) VALUES(1);";
+  $sql += "INSERT INTO board(stili) VALUES(2);";
+  $sql += "INSERT INTO board(stili) VALUES(3);";
+  $sql += "INSERT INTO board(stili) VALUES(4);";
+  $sql += "INSERT INTO board(stili) VALUES(5);";
+  $sql += "INSERT INTO board(stili) VALUES(6);";
+  $sql += "INSERT INTO board(stili) VALUES(7);";
   
-  $sql += "UPDATE board SET a = 'B', g = 'W' WHERE stili = 1;" 
-  $sql += "UPDATE board SET a = 'W', g = 'B' WHERE stili = 7;"
+  $sql += "UPDATE board SET a = 'B', g = 'W' WHERE stili = 1;";
+  $sql += "UPDATE board SET a = 'W', g = 'B' WHERE stili = 7;";
 
   $mysqli->multi_query($query);
   do {
