@@ -31,6 +31,14 @@ switch ($request[0]) {
     get_move($conn, $request[1], $request[2], $currentPlayer);
     break;
 
+  case "status":
+    get_status($conn);
+    break;
+
+  case "reset":
+    reset_game($conn);
+    break;
+
   default:
     header("HTTP/1.1 404 Endpoint not found");
     header('Content-Type: application/json;');

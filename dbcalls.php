@@ -28,8 +28,6 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
 
   $color = get_user_color($currentPlayer);
 
-  // TODO LOGIC
-
   $position_number_flag = false ;
   
   if ($target_position_number = $original_position_number || $target_position_number = $original_position_letter + 1 || $target_position_number = $original_position_letter - 1 ){
@@ -95,9 +93,6 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
     }
   }
 
-
-  // 2. Check target cell neighbors
-  // if not 'E' set them to player color
   switch ($target_position_letter) {
     case "a":
       $available_letters = ['a', 'b'];
@@ -147,20 +142,17 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
   // Updates board
   $mysqli->multi_query($query);
   do {
-      /* store the result set in PHP */
       if ($result = $mysqli->store_result()) {
           while ($row = $result->fetch_row()) {
           }
       }
-      /* print divider */
       if ($mysqli->more_results()) {
       }
   } while ($mysqli->next_result());
 
-  // TODO LOGIC
+  change_player_turn($conn, $currentPlayer);
 
-  // 1. Change player turn
-  // 2. Check deadlock / player won
+  check_game_end($conn);
 
   // Returns new board
   get_board($conn);
@@ -295,6 +287,64 @@ function get_user_color($currentPlayer) {
   } else {
     return "W";
   }
+}
+
+function get_other_user_color($currentPlayer) {
+  if ($currentPlayer == "Player1") {
+    return "W";
+  } else {
+    return "B";
+  }
+}
+
+function change_player_turn($conn, $currentPlayer) {
+  $user_color = get_other_user_color($currentPlayer);
+  $sql = "UPDATE status SET Player_turn = '$user_color';";
+  if ($conn->query($sql) === TRUE) {
+      
+  }
+}
+
+function check_game_end($conn) {
+  // Check deadlock / player won
+}
+
+function get_status($conn) {
+  // Return game status
+}
+
+function reset_game($conn) {
+  // Reset board / status
+  $sql = "DELETE * FROM board;"
+  $sql += "DELETE * FROM status;"
+
+  $sql += "INSERT INTO status(Player_turn, Game_result) VALUES('B', NULL);"
+
+  $sql += "INSERT INTO board(stili) VALUES(1);"
+  $sql += "INSERT INTO board(stili) VALUES(2);"
+  $sql += "INSERT INTO board(stili) VALUES(3);"
+  $sql += "INSERT INTO board(stili) VALUES(4);"
+  $sql += "INSERT INTO board(stili) VALUES(5);"
+  $sql += "INSERT INTO board(stili) VALUES(6);"
+  $sql += "INSERT INTO board(stili) VALUES(7);"
+  
+  $sql += "UPDATE board SET a = 'B', g = 'W' WHERE stili = 1;" 
+  $sql += "UPDATE board SET a = 'W', g = 'B' WHERE stili = 7;"
+
+  $mysqli->multi_query($query);
+  do {
+      if ($result = $mysqli->store_result()) {
+          while ($row = $result->fetch_row()) {
+          }
+      }
+      if ($mysqli->more_results()) {
+      }
+  } while ($mysqli->next_result());
+
+  header("HTTP/1.1 200 OK");
+  header('Content-Type: application/json;');
+  echo '{"Response":"Game Reset"}';
+  die();
 }
 
 ?>
