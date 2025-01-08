@@ -311,6 +311,23 @@ function check_game_end($conn) {
 
 function get_status($conn) {
   // Return game status
+  $sql = "SELECT * FROM status;";
+  if ($result = $conn -> query($sql)) {
+    if ($row = $result->fetch_assoc()) {
+      $player_turn = $row["Player_turn"];
+      $game_result = $row["Game_result"];
+      if ($game_result != NULL) {
+        header("HTTP/1.1 200 Ok");
+        header('Content-Type: application/json;');
+        echo '{"Response":"' . $game_result . ' won", "StatusCode":200}';
+      } else {
+        header("HTTP/1.1 200 Ok");
+        header('Content-Type: application/json;');
+        echo '{"Response":"' . $player_turn . ' turn", "StatusCode":200}';
+      }
+    }
+  }
+  
 }
 
 function reset_game($conn) {
