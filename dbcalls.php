@@ -544,8 +544,8 @@ function get_status($conn) {
 
 function reset_game($conn) {
   // Reset board / status
-  $sql = "DELETE * FROM board;";
-  $sql += "DELETE * FROM status;";
+  $sql = "DELETE FROM board;";
+  $sql += "DELETE FROM status;";
 
   $sql += "INSERT INTO status(Player_turn, Game_result) VALUES('B', NULL);";
 
