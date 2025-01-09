@@ -140,15 +140,15 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
   }
 
   // Updates board
-  $mysqli->multi_query($query);
+  $conn->multi_query($query);
   do {
-      if ($result = $mysqli->store_result()) {
+      if ($result = $conn->store_result()) {
           while ($row = $result->fetch_row()) {
           }
       }
-      if ($mysqli->more_results()) {
+      if ($conn->more_results()) {
       }
-  } while ($mysqli->next_result());
+  } while ($conn->next_result());
 
   change_player_turn($conn, $currentPlayer);
 
@@ -316,16 +316,16 @@ function check_game_end($conn) {
   $sql .= "SELECT COUNT(f) AS countA FROM board WHERE a='W';";
   $sql .= "SELECT COUNT(g) AS countA FROM board WHERE a='W';";
 
-  $mysqli->multi_query($sql);
+  $conn->multi_query($sql);
   do {
-      if ($result = $mysqli->store_result()) {
+      if ($result = $conn->store_result()) {
           while ($row = $result->fetch_row()) {
             $sum_w .= $row['countA'];
           }
       }
-      if ($mysqli->more_results()) {
+      if ($conn->more_results()) {
       }
-  } while ($mysqli->next_result());
+  } while ($conn->next_result());
 
   $sum_b = 0;
 
@@ -338,16 +338,16 @@ function check_game_end($conn) {
   $sql .= "SELECT COUNT(f) AS countA FROM board WHERE a='B';";
   $sql .= "SELECT COUNT(g) AS countA FROM board WHERE a='B';";
 
-  $mysqli->multi_query($sql);
+  $conn->multi_query($sql);
   do {
-      if ($result = $mysqli->store_result()) {
+      if ($result = $conn->store_result()) {
           while ($row = $result->fetch_row()) {
             $sum_b .= $row['countA'];
           }
       }
-      if ($mysqli->more_results()) {
+      if ($conn->more_results()) {
       }
-  } while ($mysqli->next_result());
+  } while ($conn->next_result());
 
   if($sum_w + $sum_b == 49) {
 
@@ -560,21 +560,22 @@ function reset_game($conn) {
   $sql .= "UPDATE board SET a = 'B', g = 'W' WHERE stili = 1;";
   $sql .= "UPDATE board SET a = 'W', g = 'B' WHERE stili = 7;";
 
-  $mysqli->multi_query($sql);
-  do {
-      if ($result = $mysqli->store_result()) {
-          while ($row = $result->fetch_row()) {
+  if ($conn->multi_query($sql)) {
+    do {
+        if ($result = $conn->store_result()) {
+            while ($row = $result->fetch_row()) {
 
-          }
-      }
-      if ($mysqli->more_results()) {
-      }
-  } while ($mysqli->next_result());
+            }
+        }
+        if ($conn->more_results()) {
+        }
+    } while ($conn->next_result());
 
-  header("HTTP/1.1 200 OK");
-  header('Content-Type: application/json;');
-  echo '{"Response":"Game Reset"}';
-  die();
+    header("HTTP/1.1 200 OK");
+    header('Content-Type: application/json;');
+    echo '{"Response":"Game Reset"}';
+    die();
+  }
 }
 
 ?>
