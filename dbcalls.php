@@ -30,7 +30,7 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
 
   $position_number_flag = false ;
   
-  if ($target_position_number = $original_position_number || $target_position_number = $original_position_letter + 1 || $target_position_number = $original_position_letter - 1 ){
+  if (intval($target_position_number) = intval($original_position_number) || intval($target_position_number) = intval($original_position_number) + 1 || intval($target_position_number) = intval($original_position_number) - 1 ){
     $position_letter_flag = true;
   }
 
@@ -121,7 +121,7 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
       die();
   }
 
-  $available_numbers = [$target_position_number - 1, $target_position_number, $target_position_number + 1];
+  $available_numbers = [intval($target_position_number) - 1, intval($target_position_number), intval($target_position_number) + 1];
 
   for ($x = 0; $x < count($available_numbers); $x++) {
     $number = $available_numbers[$x];
@@ -155,7 +155,7 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
 
   change_player_turn($conn, $currentPlayer);
 
-  check_game_end($conn);
+  check_game_end($conn, $currentPlayer);
 
   // Returns new board
   get_board($conn);
@@ -308,7 +308,7 @@ function change_player_turn($conn, $currentPlayer) {
   }
 }
 
-function check_game_end($conn) {
+function check_game_end($conn, $currentPlayer) {
   $sum_w = 0;
 
   $sql =  "SELECT COUNT(a) AS countA FROM board WHERE a='W';";
