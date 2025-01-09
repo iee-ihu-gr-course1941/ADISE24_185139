@@ -26,6 +26,10 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
   $original_position_letter = substr($original_position, 0, 1);
   $original_position_number = substr($original_position, 1, 1);
 
+  // Breaks target position into letter and number combination
+  $target_position_letter = substr($target_position, 0, 1);
+  $target_position_number = substr($target_position, 1, 1);
+
   $color = get_user_color($currentPlayer);
 
   $position_number_flag = false ;
@@ -123,7 +127,7 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
 
   $available_numbers = [intval($target_position_number) - 1, intval($target_position_number), intval($target_position_number) + 1];
   $sql = '';
-  
+
   for ($x = 0; $x < count($available_numbers); $x++) {
     $number = $available_numbers[$x];
     for ($y = 0; $y < count($available_letters); $y++) {
