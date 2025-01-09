@@ -135,7 +135,7 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
     $number = $available_numbers[$x];
     for ($y = 0; $y > count($available_letters); $y++) {
       $letter = $available_letters[$y];
-      $sql += "UPDATE board SET $letter='$color' WHERE stili='$number' AND $letter<>'E' AND $letter<>'$color';";
+      $sql .= "UPDATE board SET $letter='$color' WHERE stili='$number' AND $letter<>'E' AND $letter<>'$color';";
     }
   }
 
@@ -309,18 +309,18 @@ function check_game_end($conn) {
   $sum_w = 0;
 
   $sql =  "SELECT COUNT(a) AS countA FROM board WHERE a='W';";
-  $sql += "SELECT COUNT(b) AS countA FROM board WHERE a='W';";
-  $sql += "SELECT COUNT(c) AS countA FROM board WHERE a='W';";
-  $sql += "SELECT COUNT(d) AS countA FROM board WHERE a='W';";
-  $sql += "SELECT COUNT(e) AS countA FROM board WHERE a='W';";
-  $sql += "SELECT COUNT(f) AS countA FROM board WHERE a='W';";
-  $sql += "SELECT COUNT(g) AS countA FROM board WHERE a='W';";
+  $sql .= "SELECT COUNT(b) AS countA FROM board WHERE a='W';";
+  $sql .= "SELECT COUNT(c) AS countA FROM board WHERE a='W';";
+  $sql .= "SELECT COUNT(d) AS countA FROM board WHERE a='W';";
+  $sql .= "SELECT COUNT(e) AS countA FROM board WHERE a='W';";
+  $sql .= "SELECT COUNT(f) AS countA FROM board WHERE a='W';";
+  $sql .= "SELECT COUNT(g) AS countA FROM board WHERE a='W';";
 
   $mysqli->multi_query($sql);
   do {
       if ($result = $mysqli->store_result()) {
           while ($row = $result->fetch_row()) {
-            $sum_w += $row['countA'];
+            $sum_w .= $row['countA'];
           }
       }
       if ($mysqli->more_results()) {
@@ -331,18 +331,18 @@ function check_game_end($conn) {
 
   
   $sql =  "SELECT COUNT(a) AS countA FROM board WHERE a='B';";
-  $sql += "SELECT COUNT(b) AS countA FROM board WHERE a='B';";
-  $sql += "SELECT COUNT(c) AS countA FROM board WHERE a='B';";
-  $sql += "SELECT COUNT(d) AS countA FROM board WHERE a='B';";
-  $sql += "SELECT COUNT(e) AS countA FROM board WHERE a='B';";
-  $sql += "SELECT COUNT(f) AS countA FROM board WHERE a='B';";
-  $sql += "SELECT COUNT(g) AS countA FROM board WHERE a='B';";
+  $sql .= "SELECT COUNT(b) AS countA FROM board WHERE a='B';";
+  $sql .= "SELECT COUNT(c) AS countA FROM board WHERE a='B';";
+  $sql .= "SELECT COUNT(d) AS countA FROM board WHERE a='B';";
+  $sql .= "SELECT COUNT(e) AS countA FROM board WHERE a='B';";
+  $sql .= "SELECT COUNT(f) AS countA FROM board WHERE a='B';";
+  $sql .= "SELECT COUNT(g) AS countA FROM board WHERE a='B';";
 
   $mysqli->multi_query($sql);
   do {
       if ($result = $mysqli->store_result()) {
           while ($row = $result->fetch_row()) {
-            $sum_b += $row['countA'];
+            $sum_b .= $row['countA'];
           }
       }
       if ($mysqli->more_results()) {
@@ -545,20 +545,20 @@ function get_status($conn) {
 function reset_game($conn) {
   // Reset board / status
   $sql = "DELETE FROM board;";
-  $sql += "DELETE FROM status;";
+  $sql .= "DELETE FROM status;";
 
-  $sql += "INSERT INTO status(Player_turn, Game_result) VALUES('B', NULL);";
+  $sql .= "INSERT INTO status(Player_turn, Game_result) VALUES('B', NULL);";
 
-  $sql += "INSERT INTO board(stili) VALUES(1);";
-  $sql += "INSERT INTO board(stili) VALUES(2);";
-  $sql += "INSERT INTO board(stili) VALUES(3);";
-  $sql += "INSERT INTO board(stili) VALUES(4);";
-  $sql += "INSERT INTO board(stili) VALUES(5);";
-  $sql += "INSERT INTO board(stili) VALUES(6);";
-  $sql += "INSERT INTO board(stili) VALUES(7);";
+  $sql .= "INSERT INTO board(stili) VALUES(1);";
+  $sql .= "INSERT INTO board(stili) VALUES(2);";
+  $sql .= "INSERT INTO board(stili) VALUES(3);";
+  $sql .= "INSERT INTO board(stili) VALUES(4);";
+  $sql .= "INSERT INTO board(stili) VALUES(5);";
+  $sql .= "INSERT INTO board(stili) VALUES(6);";
+  $sql .= "INSERT INTO board(stili) VALUES(7);";
   
-  $sql += "UPDATE board SET a = 'B', g = 'W' WHERE stili = 1;";
-  $sql += "UPDATE board SET a = 'W', g = 'B' WHERE stili = 7;";
+  $sql .= "UPDATE board SET a = 'B', g = 'W' WHERE stili = 1;";
+  $sql .= "UPDATE board SET a = 'W', g = 'B' WHERE stili = 7;";
 
   $mysqli->multi_query($sql);
   do {
