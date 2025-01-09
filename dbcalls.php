@@ -30,7 +30,7 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
 
   $position_number_flag = false ;
   
-  if (intval($target_position_number) = intval($original_position_number) || intval($target_position_number) = intval($original_position_number) + 1 || intval($target_position_number) = intval($original_position_number) - 1 ){
+  if (intval($target_position_number) == intval($original_position_number) || intval($target_position_number) == intval($original_position_number) + 1 || intval($target_position_number) == intval($original_position_number) - 1 ){
     $position_letter_flag = true;
   }
 
