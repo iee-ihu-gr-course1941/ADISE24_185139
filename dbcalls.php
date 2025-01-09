@@ -85,14 +85,6 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
       die();
   }
 
-  if ($position_letter_flag != true || $position_number_flag != true) {
-    $sql = "UPDATE board SET $original_position_letter='E' WHERE stili='$original_position_number';";
-
-    if ($conn->query($sql) === TRUE) {
-      
-    }
-  }
-
   switch ($target_position_letter) {
     case "a":
       $available_letters = ['a', 'b'];
@@ -149,6 +141,15 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
       if ($conn->more_results()) {
       }
   } while ($conn->next_result());
+
+  // If it was a move and not a duplicate then we change the original cell to 'E' (Empty)
+  if ($position_letter_flag != true || $position_number_flag != true) {
+    $sql = "UPDATE board SET $original_position_letter='E' WHERE stili='$original_position_number';";
+
+    if ($conn->query($sql) === TRUE) {
+      
+    }
+  }
 
   change_player_turn($conn, $currentPlayer);
 
