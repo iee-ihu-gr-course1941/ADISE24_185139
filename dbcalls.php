@@ -132,7 +132,7 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
   }
 
   // Updates board
-  $conn->multi_query($query);
+  $conn->multi_query($sql);
   do {
       if ($result = $conn->store_result()) {
           while ($row = $result->fetch_row()) {
