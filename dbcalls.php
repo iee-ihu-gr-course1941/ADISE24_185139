@@ -122,7 +122,8 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
   }
 
   $available_numbers = [intval($target_position_number) - 1, intval($target_position_number), intval($target_position_number) + 1];
-
+  $sql = '';
+  
   for ($x = 0; $x < count($available_numbers); $x++) {
     $number = $available_numbers[$x];
     for ($y = 0; $y < count($available_letters); $y++) {
