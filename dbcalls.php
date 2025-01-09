@@ -36,37 +36,37 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
   switch ($original_position_number) {
     case '1':
       if ($target_position_number == '1' || $target_position_number == '2'){
-        $position_letter_flag = true;
+        $position_number_flag = true;
       }
       break;
     case '2':
       if ($target_position_number == '1' || $target_position_number == '2' || $target_position_number == '3'){
-        $position_letter_flag = true;
+        $position_number_flag = true;
       }
       break;
     case '3':
       if ($target_position_number == '2' || $target_position_number == '3' || $target_position_number == '4'){
-        $position_letter_flag = true;
+        $position_number_flag = true;
       }
       break;
     case '4':
       if ($target_position_number == '3' || $target_position_number == '4' || $target_position_number == '5'){
-        $position_letter_flag = true;
+        $position_number_flag = true;
       }
       break;
     case '5':
       if ($target_position_number == '4' || $target_position_number == '5' || $target_position_number == '6'){
-        $position_letter_flag = true;
+        $position_number_flag = true;
       }
       break;
     case '6':
       if ($target_position_number == '5' || $target_position_number == '6' || $target_position_number == '7'){
-        $position_letter_flag = true;
+        $position_number_flag = true;
       }
       break;
     case '7':
       if ($target_position_number == '6' || $target_position_number == '7'){
-        $position_letter_flag = true;
+        $position_number_flag = true;
       }
       break;
     default:
