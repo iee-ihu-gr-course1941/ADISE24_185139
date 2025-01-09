@@ -306,7 +306,219 @@ function change_player_turn($conn, $currentPlayer) {
 }
 
 function check_game_end($conn) {
-  // Check deadlock / player won
+  $sum_w = 0;
+
+  $sql =  "SELECT COUNT(a) AS countA FROM board WHERE a='W';";
+  $sql += "SELECT COUNT(b) AS countA FROM board WHERE a='W';";
+  $sql += "SELECT COUNT(c) AS countA FROM board WHERE a='W';";
+  $sql += "SELECT COUNT(d) AS countA FROM board WHERE a='W';";
+  $sql += "SELECT COUNT(e) AS countA FROM board WHERE a='W';";
+  $sql += "SELECT COUNT(f) AS countA FROM board WHERE a='W';";
+  $sql += "SELECT COUNT(g) AS countA FROM board WHERE a='W';";
+
+  $mysqli->multi_query($sql);
+  do {
+      if ($result = $mysqli->store_result()) {
+          while ($row = $result->fetch_row()) {
+            $sum_w += $row['countA'];
+          }
+      }
+      if ($mysqli->more_results()) {
+      }
+  } while ($mysqli->next_result());
+
+  $sum_b = 0;
+
+  
+  $sql =  "SELECT COUNT(a) AS countA FROM board WHERE a='B';";
+  $sql += "SELECT COUNT(b) AS countA FROM board WHERE a='B';";
+  $sql += "SELECT COUNT(c) AS countA FROM board WHERE a='B';";
+  $sql += "SELECT COUNT(d) AS countA FROM board WHERE a='B';";
+  $sql += "SELECT COUNT(e) AS countA FROM board WHERE a='B';";
+  $sql += "SELECT COUNT(f) AS countA FROM board WHERE a='B';";
+  $sql += "SELECT COUNT(g) AS countA FROM board WHERE a='B';";
+
+  $mysqli->multi_query($sql);
+  do {
+      if ($result = $mysqli->store_result()) {
+          while ($row = $result->fetch_row()) {
+            $sum_b += $row['countA'];
+          }
+      }
+      if ($mysqli->more_results()) {
+      }
+  } while ($mysqli->next_result());
+
+  if($sum_w + $sum_b == 49) {
+
+    if($sum_w < $sum_b){
+      $winner = "B";
+    }
+    else{
+      $winner = "W";
+    }
+
+    header("HTTP/1.1 200 Game Finished");
+    header('Content-Type: application/json;');
+    echo '{"Response":"' . $winner . ' Win", "StatusCode":200}';
+    die();
+  }
+
+
+  // Check deadlock 
+  $other_player_color = get_other_user_color($currentPlayer);
+  
+  // Get all empty cells from board
+  $empty_cells = [];
+  if ($result = $conn -> query("SELECT * FROM board")) {
+    if ($result->num_rows > 0) {
+      while($row = $result->fetch_assoc()) {
+        if ($row['a'] == 'E') {
+          $number = $row['stili'];
+          array_push($empty_cells, "a$number");
+        }
+        if ($row['b'] == 'E') {
+          $number = $row['stili'];
+          array_push($empty_cells, "b$number");
+        }
+        if ($row['c'] == 'E') {
+          $number = $row['stili'];
+          array_push($empty_cells, "c$number");
+        }
+        if ($row['d'] == 'E') {
+          $number = $row['stili'];
+          array_push($empty_cells, "d$number");
+        }
+        if ($row['e'] == 'E') {
+          $number = $row['stili'];
+          array_push($empty_cells, "e$number");
+        }
+        if ($row['f'] == 'E') {
+          $number = $row['stili'];
+          array_push($empty_cells, "f$number");
+        }
+        if ($row['g'] == 'E') {
+          $number = $row['stili'];
+          array_push($empty_cells, "g$number");
+        }
+      }
+    }
+  }
+
+  $continue_game = false; // true -> move available, false -> deadlock
+
+  for ($x = 0; $x < count($empty_cells); $x ++) {
+    if ($continue_game == false) {
+      $continue_game = validate_deadlock($conn, $empty_cells[$x], $currentPlayer);
+    }
+  }
+
+  if ($continue_game == false) {
+    header("HTTP/1.1 200 Game Finished");
+    header('Content-Type: application/json;');
+    echo '{"Response":"' . get_user_color($currentPlayer) . ' Win", "StatusCode":200}';
+    die();
+  }
+}
+
+// Returns false if there is a deadlock on this cell
+function validate_deadlock($conn, $empty_position, $currentPlayer) {
+  // Breaks empty position into letter and number combination
+  $empty_position_letter = substr($empty_position, 0, 1);
+  $empty_position_number = substr($empty_position, 1, 1);
+
+  // Gets other user's color
+  $color = get_other_user_color($currentPlayer);
+
+  // Gets available columns for empty position
+  switch ($empty_position_letter) {
+    case "a":
+      $available_letters = ['a', 'b', 'c'];
+      break;
+    
+    case "b":
+      $available_letters = ['a', 'b', 'c', 'd'];
+      break;
+
+    case "c":
+      $available_letters = ['a', 'b', 'c', 'd', 'e'];
+      break;  
+   
+    case "d":
+      $available_letters = ['b', 'c', 'd', 'e', 'f'];
+      break;
+        
+    case "e":
+      $available_letters = [ 'c', 'd', 'e', 'f', 'g'];
+      break; 
+      
+    case "f":
+      $available_letters = ['d','e', 'f', 'g'];
+      break; 
+
+    case "g":
+      $available_letters = ['e', 'f', 'g'];
+    break;   
+
+    default: //404  letter not found
+      header("HTTP/1.1 404 Letter not found");
+      header('Content-Type: application/json;');
+      echo '{"Response":"Letter not found", "StatusCode":404}';
+      die();
+  }
+
+  // Gets avilable rows for empty position
+  switch ($empty_position_number) {
+    case '1':
+      $available_numbers = ['1', '2', '3'];
+      break;
+
+    case '2':
+      $available_numbers = ['1', '2', '3', '4'];
+      break;
+
+    case '3':
+      $available_numbers = ['1', '2', '3', '4', '5'];
+      break;
+
+    case '4':
+      $available_numbers = [ '2', '3', '4', '5', '6'];
+      break;
+
+    case '5':
+      $available_numbers = ['3', '4', '5', '6', '7'];
+      break;
+
+    case '6':
+      $available_numbers = ['4', '5', '6', '7'];
+      break;
+
+    case '7':
+      $available_numbers = ['5', '6', '7'];
+      break; 
+
+    default: // 404 number not found
+      header("HTTP/1.1 404 Number not found");
+      header('Content-Type: application/json;');
+      echo '{"Response":"Number not found", "StatusCode":404}';
+      die();
+  }
+
+  for ($i = 0; $i < count($available_numbers); $i ++) {
+    for ($j = 0; $j < count($available_letters); $j ++) {
+      $number = $available_numbers[$i];
+      $letter = $available_letters[$j];
+      $sql = "SELECT $letter FROM board WHERE stili = $number;";
+      if ($result = $conn -> query($sql)) {
+        if ($row = $result->fetch_assoc()) {
+          if ($row[$letter] == $color) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+  return false;
 }
 
 function get_status($conn) {
@@ -348,10 +560,11 @@ function reset_game($conn) {
   $sql += "UPDATE board SET a = 'B', g = 'W' WHERE stili = 1;";
   $sql += "UPDATE board SET a = 'W', g = 'B' WHERE stili = 7;";
 
-  $mysqli->multi_query($query);
+  $mysqli->multi_query($sql);
   do {
       if ($result = $mysqli->store_result()) {
           while ($row = $result->fetch_row()) {
+
           }
       }
       if ($mysqli->more_results()) {
