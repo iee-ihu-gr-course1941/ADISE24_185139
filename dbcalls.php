@@ -125,6 +125,14 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
       die();
   }
 
+  // This sets the target cell to user color
+  $color = get_user_color($currentPlayer);
+  $sql = "UPDATE board SET $target_position_letter='$color' WHERE stili='$target_position_number';";
+
+  if ($conn->query($sql) === TRUE) {
+      
+  }
+
   $available_numbers = [intval($target_position_number) - 1, intval($target_position_number), intval($target_position_number) + 1];
   $sql = '';
 
