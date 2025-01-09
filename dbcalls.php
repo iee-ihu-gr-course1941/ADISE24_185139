@@ -41,43 +41,43 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
   $position_letter_flag = false;
   switch ($original_position_letter) {
     case "a":
-      if ($target_position_letter = 'a' || $target_position_letter = 'b'){
+      if ($target_position_letter == 'a' || $target_position_letter == 'b'){
         $position_letter_flag = true;
       }
       break;
     
     case "b":
-      if ($target_position_letter = 'a' || $target_position_letter = 'b'  || $target_position_letter = 'c'){
+      if ($target_position_letter == 'a' || $target_position_letter == 'b'  || $target_position_letter == 'c'){
         $position_letter_flag = true;
       }
       break;
 
     case "c":
-      if ($target_position_letter = 'b' || $target_position_letter = 'c'  || $target_position_letter = 'd'){
+      if ($target_position_letter == 'b' || $target_position_letter == 'c'  || $target_position_letter == 'd'){
         $position_letter_flag = true;
       }
       break;  
    
     case "d":
-      if ($target_position_letter = 'c' || $target_position_letter = 'd'  || $target_position_letter = 'e'){
+      if ($target_position_letter == 'c' || $target_position_letter == 'd'  || $target_position_letter == 'e'){
         $position_letter_flag = true;
       }
       break;
         
     case "e":
-      if ($target_position_letter = 'd' || $target_position_letter = 'e'  || $target_position_letter = 'f'){
+      if ($target_position_letter == 'd' || $target_position_letter == 'e'  || $target_position_letter == 'f'){
         $position_letter_flag = true;
       }
       break; 
       
     case "f":
-      if ($target_position_letter = 'e' || $target_position_letter = 'f'  || $target_position_letter = 'g'){
+      if ($target_position_letter == 'e' || $target_position_letter == 'f'  || $target_position_letter == 'g'){
         $position_letter_flag = true;
       }
       break; 
 
     case "g":
-      if ($target_position_letter = 'f' || $target_position_letter = 'g'){
+      if ($target_position_letter == 'f' || $target_position_letter == 'g'){
         $position_letter_flag = true;
       }
     break;   
