@@ -123,11 +123,13 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
 
   $available_numbers = [$target_position_number - 1, $target_position_number, $target_position_number + 1];
 
-  for ($x = 0; $x > count($available_numbers); $x++) {
+  for ($x = 0; $x < count($available_numbers); $x++) {
     $number = $available_numbers[$x];
-    for ($y = 0; $y > count($available_letters); $y++) {
+    for ($y = 0; $y < count($available_letters); $y++) {
       $letter = $available_letters[$y];
-      $sql .= "UPDATE board SET $letter='$color' WHERE stili='$number' AND $letter<>'E' AND $letter<>'$color';";
+      if ($number <= 8 && $number >= 1) {
+        $sql .= "UPDATE board SET $letter='$color' WHERE stili='$number' AND $letter<>'E' AND $letter<>'$color';";
+      }
     }
   }
 
