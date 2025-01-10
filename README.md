@@ -30,6 +30,8 @@
 - ```/reset/``` GET 	- Resets board
 - ```/status/``` GET 	- Returns game status
 
+All endpoints require user to be authenticated (Bearer Token)
+
 ## Examples:
 
 - I want to move from a1 to a3: https://users.iee.ihu.gr/~it185139/ADISE24_185139/index.php/move/a1/a3
