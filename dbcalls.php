@@ -19,6 +19,9 @@ function get_board($conn) {
 
 function get_move($conn, $original_position, $target_position, $currentPlayer) {
 
+  // Check users turn
+  check_turn($conn, $currentPlayer);
+
   // Validates move
   validate_move($conn, $original_position, $target_position, $currentPlayer);
 
@@ -207,6 +210,22 @@ function get_move($conn, $original_position, $target_position, $currentPlayer) {
 
   // Returns new board
   get_board($conn);
+}
+
+function check_turn($conn, $currentPlayer) {
+  $user_color = get_user_color($currentPlayer);
+  
+  $sql = "SELECT Player_turn FROM status;";
+  if ($result = $conn -> query($sql)) {
+    while($row = $result->fetch_assoc()) {
+      if ($user_color != $row['Player_turn']) {
+        header("HTTP/1.1 406 Not your turn");
+        header('Content-Type: application/json;');
+        echo '{"Response":"' . $row['Player_turn'] . ' Turn", "StatusCode":406}';
+        die();
+      } 
+    }
+  }
 }
 
 function validate_move($conn, $original_position, $target_position, $currentPlayer) {
