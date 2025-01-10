@@ -379,12 +379,12 @@ function check_game_end($conn, $currentPlayer) {
   $sum_w = 0;
 
   $sql =  "SELECT COUNT(a) AS countA FROM board WHERE a='W';";
-  $sql .= "SELECT COUNT(b) AS countA FROM board WHERE a='W';";
-  $sql .= "SELECT COUNT(c) AS countA FROM board WHERE a='W';";
-  $sql .= "SELECT COUNT(d) AS countA FROM board WHERE a='W';";
-  $sql .= "SELECT COUNT(e) AS countA FROM board WHERE a='W';";
-  $sql .= "SELECT COUNT(f) AS countA FROM board WHERE a='W';";
-  $sql .= "SELECT COUNT(g) AS countA FROM board WHERE a='W';";
+  $sql .= "SELECT COUNT(b) AS countA FROM board WHERE b='W';";
+  $sql .= "SELECT COUNT(c) AS countA FROM board WHERE c='W';";
+  $sql .= "SELECT COUNT(d) AS countA FROM board WHERE d='W';";
+  $sql .= "SELECT COUNT(e) AS countA FROM board WHERE e='W';";
+  $sql .= "SELECT COUNT(f) AS countA FROM board WHERE f='W';";
+  $sql .= "SELECT COUNT(g) AS countA FROM board WHERE g='W';";
 
   $conn->multi_query($sql);
   do {
@@ -401,12 +401,12 @@ function check_game_end($conn, $currentPlayer) {
 
   
   $sql =  "SELECT COUNT(a) AS countA FROM board WHERE a='B';";
-  $sql .= "SELECT COUNT(b) AS countA FROM board WHERE a='B';";
-  $sql .= "SELECT COUNT(c) AS countA FROM board WHERE a='B';";
-  $sql .= "SELECT COUNT(d) AS countA FROM board WHERE a='B';";
-  $sql .= "SELECT COUNT(e) AS countA FROM board WHERE a='B';";
-  $sql .= "SELECT COUNT(f) AS countA FROM board WHERE a='B';";
-  $sql .= "SELECT COUNT(g) AS countA FROM board WHERE a='B';";
+  $sql .= "SELECT COUNT(b) AS countA FROM board WHERE b='B';";
+  $sql .= "SELECT COUNT(c) AS countA FROM board WHERE c='B';";
+  $sql .= "SELECT COUNT(d) AS countA FROM board WHERE d='B';";
+  $sql .= "SELECT COUNT(e) AS countA FROM board WHERE e='B';";
+  $sql .= "SELECT COUNT(f) AS countA FROM board WHERE f='B';";
+  $sql .= "SELECT COUNT(g) AS countA FROM board WHERE g='B';";
 
   $conn->multi_query($sql);
   do {
