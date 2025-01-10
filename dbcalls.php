@@ -378,20 +378,18 @@ function change_player_turn($conn, $currentPlayer) {
 function check_game_end($conn, $currentPlayer) {
   $sum_w = 0;
 
-  $sql =  "SELECT COUNT(a) AS countA FROM board WHERE a='W';";
-  $sql .= "SELECT COUNT(b) AS countA FROM board WHERE b='W';";
-  $sql .= "SELECT COUNT(c) AS countA FROM board WHERE c='W';";
-  $sql .= "SELECT COUNT(d) AS countA FROM board WHERE d='W';";
-  $sql .= "SELECT COUNT(e) AS countA FROM board WHERE e='W';";
-  $sql .= "SELECT COUNT(f) AS countA FROM board WHERE f='W';";
-  $sql .= "SELECT COUNT(g) AS countA FROM board WHERE g='W';";
+  $sql =  "SELECT a FROM board WHERE a='W';";
+  $sql .= "SELECT b FROM board WHERE b='W';";
+  $sql .= "SELECT c FROM board WHERE c='W';";
+  $sql .= "SELECT d FROM board WHERE d='W';";
+  $sql .= "SELECT e FROM board WHERE e='W';";
+  $sql .= "SELECT f FROM board WHERE f='W';";
+  $sql .= "SELECT g FROM board WHERE g='W';";
 
   $conn->multi_query($sql);
   do {
       if ($result = $conn->store_result()) {
-          while ($row = $result->fetch_row()) {
-            $sum_w .= $row['countA'];
-          }
+        $sum_w .= $result->num_rows;
       }
       if ($conn->more_results()) {
       }
@@ -400,20 +398,18 @@ function check_game_end($conn, $currentPlayer) {
   $sum_b = 0;
 
   
-  $sql =  "SELECT COUNT(a) AS countA FROM board WHERE a='B';";
-  $sql .= "SELECT COUNT(b) AS countA FROM board WHERE b='B';";
-  $sql .= "SELECT COUNT(c) AS countA FROM board WHERE c='B';";
-  $sql .= "SELECT COUNT(d) AS countA FROM board WHERE d='B';";
-  $sql .= "SELECT COUNT(e) AS countA FROM board WHERE e='B';";
-  $sql .= "SELECT COUNT(f) AS countA FROM board WHERE f='B';";
-  $sql .= "SELECT COUNT(g) AS countA FROM board WHERE g='B';";
+  $sql =  "SELECT a FROM board WHERE a='B';";
+  $sql .= "SELECT b FROM board WHERE b='B';";
+  $sql .= "SELECT c FROM board WHERE c='B';";
+  $sql .= "SELECT d FROM board WHERE d='B';";
+  $sql .= "SELECT e FROM board WHERE e='B';";
+  $sql .= "SELECT f FROM board WHERE f='B';";
+  $sql .= "SELECT g FROM board WHERE g='B';";
 
   $conn->multi_query($sql);
   do {
       if ($result = $conn->store_result()) {
-          while ($row = $result->fetch_row()) {
-            $sum_b .= $row['countA'];
-          }
+        $sum_b .= $result->num_rows;
       }
       if ($conn->more_results()) {
       }
