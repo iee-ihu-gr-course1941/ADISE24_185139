@@ -389,7 +389,7 @@ function check_game_end($conn, $currentPlayer) {
   $conn->multi_query($sql);
   do {
       if ($result = $conn->store_result()) {
-        $sum_w .= $result->num_rows;
+        $sum_w += $result->num_rows;
       }
       if ($conn->more_results()) {
       }
@@ -409,7 +409,7 @@ function check_game_end($conn, $currentPlayer) {
   $conn->multi_query($sql);
   do {
       if ($result = $conn->store_result()) {
-        $sum_b .= $result->num_rows;
+        $sum_b += $result->num_rows;
       }
       if ($conn->more_results()) {
       }
